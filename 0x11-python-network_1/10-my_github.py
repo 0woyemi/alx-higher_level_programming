@@ -1,18 +1,14 @@
 #!/usr/bin/python3
 """
-given letter pattern as param to be search val of request; print Star War names
-usage: ./9-starwars.py [letter pattern to match names]
+given username and pw as param, get your id from Github api
+usage: ./10-my_github.py [github_username] [github_pw]
 """
 from sys import argv
 import requests
+from requests.auth import HTTPBasicAuth
 
 
 if __name__ == "__main__":
-    url = 'https://swapi.co/api/people'
-    param = {'search': argv[1]}
-    r = requests.get(url, params=param)
-
-    matching_ppl = r.json()
-    print("Number of results: {}".format(matching_ppl.get('count')))
-    for person in matching_ppl.get('results'):
-        print(person.get('name'))
+    url = 'https://api.github.com/user'
+    r = requests.get(url, auth=HTTPBasicAuth(argv[1], argv[2]))
+    print(r.json().get('id'))
